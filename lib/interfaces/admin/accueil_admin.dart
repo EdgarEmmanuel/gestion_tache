@@ -1,5 +1,6 @@
 //import 'dart:js_util';
 import 'package:gestion_tache/http/http_task.dart';
+import 'package:gestion_tache/interfaces/Default/models/task.dart';
 import 'package:gestion_tache/interfaces/auth/rememberMe.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,6 +10,7 @@ import 'package:gestion_tache/interfaces/Default/add_task.dart';
 import 'package:gestion_tache/interfaces/Default/subcomponents/tasks.dart';
 import 'package:gestion_tache/http/http_task_firebase.dart';
 import 'package:gestion_tache/globals/globals.dart' as globals;
+import 'package:intl/intl.dart';
 
 import '../auth/auth.dart';
 
@@ -24,6 +26,7 @@ class _AccueilAdminState extends State<AccueilAdmin> {
   int taskEnCours = 0;
   int taskNotEnCours = 0;
   int taskNumber = 0;
+  Future<List<Task>>? tasks;
 
   void _deleteLoginCredentials() {
     rememberMe.logOut();
@@ -40,54 +43,55 @@ class _AccueilAdminState extends State<AccueilAdmin> {
     super.initState();
 
     if (globals.isFirebase) {
-      HttpFirebase.fetchTasksNumber(globals.user?.uid).then((value) {
+      tasks = HttpFirebase.getTasksPublic();
+      HttpFirebase.fetchTasksNumberPublic().then((value) {
         setState(() {
           taskNumber = value;
         });
       });
 
-      HttpFirebase.fetchTasksNumberEchueForUser(globals.user?.uid).then((value) {
+      HttpFirebase.fetchTasksNumberEchuePublic().then((value) {
         setState(() {
           taskEchue = value;
         });
       });
 
-      HttpFirebase.fetchTasksEnCoursNumberForUser(globals.user?.uid).then((value) {
+      HttpFirebase.fetchTasksNumberEnCoursPublic().then((value) {
         setState(() {
           taskEnCours = value;
         });
       });
 
-      HttpFirebase.fetchTasksNumberNotEnCoursForUser(globals.user?.uid).then((value) {
+      HttpFirebase.fetchTasksNumberNotEnCoursPublic().then((value) {
         setState(() {
           taskNotEnCours = value;
         });
       });
     } else {
-       HttpTask.fetchTasksNumberForUser(globals.user?.uid).then((value) {
+      tasks = HttpTask.fetchTasks();
+      HttpTask.fetchTasksNumber().then((value) {
         setState(() {
           taskNumber = value;
         });
       });
 
-      HttpTask.fetchTasksEchueNumberForUser(globals.user?.uid).then((value) {
+      HttpTask.fetchTasksEchueNumber().then((value) {
         setState(() {
           taskEchue = value;
         });
       });
 
-      HttpTask.fetchTasksEnCoursNumberForUser(globals.user?.uid).then((value) {
+      HttpTask.fetchTasksEnCoursNumber().then((value) {
         setState(() {
           taskEnCours = value;
         });
       });
 
-      HttpTask.fetchTasksNotEnCoursNumberForUser(globals.user?.uid).then((value) {
+      HttpTask.fetchTasksNotEnCoursNumber().then((value) {
         setState(() {
           taskNotEnCours = value;
         });
       });
-
     }
   }
 
@@ -102,6 +106,16 @@ class _AccueilAdminState extends State<AccueilAdmin> {
   void _goToAddDartPage() {
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => const AddTask()));
+  }
+
+  void refresh() {
+    setState(() {
+      if (globals.isFirebase) {
+        tasks = HttpFirebase.getTasksPublic();
+      } else {
+        tasks = HttpTask.fetchTasks();
+      }
+    });
   }
 
   @override
@@ -203,36 +217,59 @@ class _AccueilAdminState extends State<AccueilAdmin> {
                 ),
               ),
             ),
-            // Container(
-            //   padding: const EdgeInsets.only(right: 20, bottom: 10),
-            //   child: ElevatedButton(
-            //     onPressed: () {
-            //       Navigator.push(
-            //           context,
-            //           MaterialPageRoute(
-            //               builder: (context) => const PublicTask()));
-            //     },
-            //     style: ElevatedButton.styleFrom(
-            //       elevation: 5.0,
-            //       backgroundColor: Theme.of(context).primaryColor,
-            //       fixedSize: const Size(170, 50),
-            //     ),
-            //     child: Text(
-            //       'Tâches publiques'.toUpperCase(),
-            //     ),
-            //   ),
-            // ),
             Container(
               margin: EdgeInsets.only(left: 20),
               alignment: Alignment.bottomLeft,
-              child: Text(
+              child: const Text(
                 "Liste des Tâches",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
               ),
             ),
             Expanded(
               child: SingleChildScrollView(
-                child: const Tasks(),
+                child: Expanded(
+                  child: RefreshIndicator(
+                    onRefresh: () async {
+                      refresh();
+                    },
+                    child: SingleChildScrollView(
+                      child: FutureBuilder<List<Task>>(
+                          future: tasks,
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const CircularProgressIndicator();
+                            } else if (snapshot.hasData) {
+                              if (snapshot.data?.isEmpty == true) {
+                                return const SingleChildScrollView(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      SizedBox(height: 20),
+                                      Text("Il n'y a  aucune tâche publique "),
+                                    ],
+                                  ),
+                                );
+                              } else {
+                                return ListView.builder(
+                                    shrinkWrap: true,
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    padding: const EdgeInsets.all(8),
+                                    itemCount: snapshot.data?.length,
+                                    itemBuilder: (context, index) {
+                                      return TaskItemAdmin(
+                                          task:
+                                              snapshot.data!.elementAt(index));
+                                    });
+                              }
+                            }
+                            return const SizedBox.shrink();
+                          }),
+                    ),
+                  ),
+                ),
               ),
             ),
           ],
@@ -277,6 +314,52 @@ class _AccueilAdminState extends State<AccueilAdmin> {
         ),
         floatingActionButtonLocation:
             FloatingActionButtonLocation.miniCenterDocked,
+      ),
+    );
+  }
+}
+
+class TaskItemAdmin extends StatelessWidget {
+  final Task task;
+  const TaskItemAdmin({super.key, required this.task});
+
+  String formatDate() {
+    var f = DateFormat("dd / MM / yyyy hh:mm:ss").format(task.date_echeance);
+    return f;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.fromLTRB(0, 10.0, 0, 10.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(task.title),
+              const SizedBox(height: 10.0),
+              Text(formatDate())
+            ],
+          ),
+          ElevatedButton.icon(
+            onPressed: () {
+              globals.task = task;
+              // Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //         builder: (context) => const PublicTaskDetails()));
+            },
+            icon: const Icon(Icons.arrow_forward_ios),
+            label: const Text(""),
+            style: ButtonStyle(
+              backgroundColor: const MaterialStatePropertyAll(Colors.white),
+              foregroundColor:
+                  MaterialStatePropertyAll(Theme.of(context).primaryColor),
+            ),
+          ),
+        ],
       ),
     );
   }

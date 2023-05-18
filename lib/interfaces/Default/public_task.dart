@@ -94,7 +94,7 @@ class _PublicTaskState extends State<PublicTask> {
     HttpTask.fetchTasksNumber().then((value) {
       setState(() {
         nbTask = value;
-        print(value);
+        //print(value);
       });
     });
   }
@@ -200,43 +200,44 @@ class _PublicTaskState extends State<PublicTask> {
           ),
         ),
         Expanded(
-            child: RefreshIndicator(
-                onRefresh: () async {
-                  refresh();
-                },
-                child: SingleChildScrollView(
-                  child: FutureBuilder<List<Task>>(
-                      future: tasks,
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const CircularProgressIndicator();
-                        } else if (snapshot.hasData) {
-                          if (snapshot.data?.isEmpty == true) {
-                            return SingleChildScrollView(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  SizedBox(height: 20),
-                                  Text("Il n'y a  aucune tâche publique "),
-                                ],
-                              ),
-                            );
-                          } else {
-                            return ListView.builder(
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                padding: const EdgeInsets.all(8),
-                                itemCount: snapshot.data?.length,
-                                itemBuilder: (context, index) {
-                                  return TaskItem(
-                                      task: snapshot.data!.elementAt(index));
-                                });
-                          }
-                        }
-                        return const SizedBox.shrink();
-                      }),
-                )))
+          child: RefreshIndicator(
+            onRefresh: () async {
+              refresh();
+            },
+            child: SingleChildScrollView(
+              child: FutureBuilder<List<Task>>(
+                  future: tasks,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const CircularProgressIndicator();
+                    } else if (snapshot.hasData) {
+                      if (snapshot.data?.isEmpty == true) {
+                        return SingleChildScrollView(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              SizedBox(height: 20),
+                              Text("Il n'y a  aucune tâche publique "),
+                            ],
+                          ),
+                        );
+                      } else {
+                        return ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            padding: const EdgeInsets.all(8),
+                            itemCount: snapshot.data?.length,
+                            itemBuilder: (context, index) {
+                              return TaskItem(
+                                  task: snapshot.data!.elementAt(index));
+                            });
+                      }
+                    }
+                    return const SizedBox.shrink();
+                  }),
+            ),
+          ),
+        ),
       ]),
     );
   }
