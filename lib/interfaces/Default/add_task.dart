@@ -63,12 +63,25 @@ class _AddTask extends State<AddTask> {
       date_echeance: date_echeance,
     );
 
-    //print(task);
+    if (globals.isFirebase) {
+      var r = await HttpFirebase.updateTask(globals.task?.doc_id, task);
+      bool _isModifiying = false;
 
-    var r = await HttpFirebase.updateTask(globals.task?.doc_id, task);
-    bool _isModifiying = false;
+      r ? _goBack() : print("Echec de la mise a jour ! ");
+    } else {
+      task = Task(
+      id: globals.task?.id,
+      title: title,
+      description: description,
+      date_echeance: date_echeance,
+      doc_id: globals.task?.doc_id
+    );
+      var r = await HttpTask.updateTask(task);
+      bool _isModifiying = false;
 
-    r ? _goBack() : print("Echec de la mise a jour ! ");
+      r ? _goBack() : print("Echec de la mise a jour ! ");
+      //print("to modify");
+    }
   }
 
   void _saveTask() async {

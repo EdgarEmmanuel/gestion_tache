@@ -22,7 +22,6 @@ class _Tasks extends State<Tasks> {
       globals.tasks = HttpFirebase.getTaskByUser(globals.user?.uid);
     } else {
       globals.tasks = HttpTask.fetchTasksForUser(globals.user?.uid);
-      //print("faire requete au serveur web");
     }
   }
 

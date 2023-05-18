@@ -16,9 +16,7 @@ class HttpTask {
       tasks.add(Task.fromJson(jsonParsed[i]));
     }
     return tasks;
-  
   }
-
 
   static Future<List<Task>> fetchTasksForUser(userID) async {
     String endpoint = "api/v1/tasks/user/${userID}";
@@ -48,10 +46,9 @@ class HttpTask {
     return number['number'];
   }
 
-
   static Future<int> fetchTasksEnCoursNumberForUser(userID) async {
     String endpoint = "api/v1/tasks/private/encours/user/${userID}";
-    
+
     final response = await http.get(Uri.parse(BASE_URL + endpoint));
 
     var number = json.decode(response.body);
@@ -60,14 +57,12 @@ class HttpTask {
 
   static Future<int> fetchTasksNotEnCoursNumberForUser(userID) async {
     String endpoint = "api/v1/tasks/private/notencours/user/${userID}";
-    
+
     final response = await http.get(Uri.parse(BASE_URL + endpoint));
 
     var number = json.decode(response.body);
     return number['number'];
   }
-
-
 
   static Future<int> fetchTasksNumber() async {
     String endpoint1 = "api/v1/tasks/number";
@@ -116,10 +111,15 @@ class HttpTask {
     return await http.post(url, body: task.toBody());
   }
 
-  static Future<http.Response> updateTask(Task task) async {
-    String endpoint = "api/v1/tasks";
-    var url = Uri.parse(BASE_URL + endpoint);
+  static Future<bool> updateTask(Task task) async {
+    try {
+      String endpoint = "api/v1/tasks/private";
+      var url = Uri.parse(BASE_URL + endpoint);
 
-    return await http.patch(url, body: task.toBodyUpdate());
+      await http.patch(url, body: task.toBodyUpdate());
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }
