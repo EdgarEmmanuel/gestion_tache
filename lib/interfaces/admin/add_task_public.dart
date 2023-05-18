@@ -18,7 +18,6 @@ class _AddTaskPublic extends State<AddTaskPublic> {
   String title = "";
   String description = "";
   DateTime date_echeance = DateTime.now();
-  bool _isAdding = false;
   bool _isModifiying = false;
   bool _isDeleting = false;
 

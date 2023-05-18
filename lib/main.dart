@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:gestion_tache/http/http_messaging.dart';
-import 'package:gestion_tache/interfaces/Default/accueil.dart';
 import 'firebase_options.dart';
-import 'package:firebase_in_app_messaging/firebase_in_app_messaging.dart';
 import 'interfaces/auth/start.dart';
 
 void main() async {

@@ -1,5 +1,4 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:firebase_in_app_messaging/firebase_in_app_messaging.dart';
 import 'package:flutter/material.dart';
 
 class HttpMessaging {
@@ -51,7 +50,7 @@ class HttpMessaging {
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       print("_messaging onMessageOpenedApp: $message");
     });
-    
+
     FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
   }
 }
