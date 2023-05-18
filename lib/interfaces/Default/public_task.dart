@@ -47,6 +47,19 @@ class _PublicTaskState extends State<PublicTask> {
           taskEchue = value;
         });
       });
+
+      HttpFirebase.fetchTasksNumberEnCoursPublic().then((value) {
+        setState(() {
+          taskEnCours = value;
+        });
+      });
+
+      HttpFirebase.fetchTasksNumberNotEnCoursPublic().then((value) {
+        setState(() {
+          taskNotEnCours = value;
+        });
+      });
+      
     } else {
       tasks = HttpTask.fetchTasks();
 
@@ -131,14 +144,14 @@ class _PublicTaskState extends State<PublicTask> {
                             fontSize: 17),
                       ),
                       Text(
-                        "Tache en cours : ${nbTask}",
+                        "Tache en cours : ${taskEnCours}",
                         style: const TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                             fontSize: 17),
                       ),
                       Text(
-                        "Tache qui ne sont pas en cours : ${nbTask}",
+                        "Tache qui ne sont pas en cours : ${taskNotEnCours}",
                         style: const TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
