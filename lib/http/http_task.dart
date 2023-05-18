@@ -45,6 +45,15 @@ class HttpTask {
   }
 
 
+  static Future<int> fetchTasksNotEnCoursNumber() async {
+    String endpoint1 = "api/v1/tasks/public/notencours";
+
+    final response1 = await http.get(Uri.parse(BASE_URL + endpoint1));
+    var number = json.decode(response1.body);
+    return number['number'];
+  }
+
+
 
   static Future<http.Response> deleteTask(id) async {
     String endpoint = "api/v1/taskDelete/$id";

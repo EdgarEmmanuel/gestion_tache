@@ -132,6 +132,31 @@ exports.numberTaskEnCours = async (req, res) => {
 
 
 
+exports.numberTaskNotEnCours = async (req, res) => {
+    const querySnapshot = await getDocs(collection(db, "tasks"));   
+        try{
+            let number = 0;
+    
+            querySnapshot.forEach((doc) => {
+                if(doc.data()['userID']=="0")
+                {
+                    let t = doc.data()["date_echeance"] ;
+                    let date_echeance = new Date(t.seconds * 1000 + t.nanoseconds / 1000000);
+                    var today = new Date();
+                    if(!dateInPast(date_echeance, today)) {
+                        number += 1;
+                    }
+                }
+              });
+         res.status(201).json({ number : number });
+        
+        } catch (error) {
+        console.log(error);     
+        }
+};
+
+
+
 exports.addTask = async (request, response) => {
     //console.log(request.body);
     const querySnapshot = await getDocs(collection(db, "tasks"));

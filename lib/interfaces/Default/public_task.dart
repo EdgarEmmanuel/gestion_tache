@@ -79,6 +79,12 @@ class _PublicTaskState extends State<PublicTask> {
           taskEnCours = value;
         });
       });
+
+      HttpTask.fetchTasksNotEnCoursNumber().then((value) {
+        setState(() {
+          taskNotEnCours = value;
+        });
+      });
     }
   }
 
