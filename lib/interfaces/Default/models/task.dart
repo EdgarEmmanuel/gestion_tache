@@ -20,11 +20,12 @@ class Task {
     return " title = $title description = $description date_echeance = $date_echeance id = $id doc_id = ${doc_id!}";
   }
 
-  Map toBody() {
+  Map toBody(id) {
     return {
       "title": title,
       "description": description,
-      "date_echeance": date_echeance.toString()
+      "date_echeance": date_echeance.toString(),
+      "userID": id
     };
   }
 

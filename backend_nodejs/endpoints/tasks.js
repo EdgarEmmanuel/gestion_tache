@@ -37,15 +37,7 @@ exports.getTasks = async (req, response) => {
 
 
 
-exports.deleteTask = async (request, response) => {
-    try{
-   await deleteDoc(doc(db, "tasks",request.params.id ));
-   return response.status(200).json({ message: "La tâche a été supprimée avec succès." });
 
-}catch(error){
-    return response.status(500).json({ message: "Erreur lors de la suppresion !  " });
-}
-}
   
 exports.numberItem = async (req, res) => {
     const querySnapshot = await getDocs(collection(db, "tasks"));
@@ -157,41 +149,7 @@ exports.numberTaskNotEnCours = async (req, res) => {
 
 
 
-exports.addTask = async (request, response) => {
-    //console.log(request.body);
-    const querySnapshot = await getDocs(collection(db, "tasks"));
-    try{
-        let number = 0;
 
-        querySnapshot.forEach((doc) => {
-           number += 1;
-          });
-
-
-        const date = new Date(request.body.date_echeance);
-
-        const docRef = await addDoc(collection(db, "tasks"), {
-            id: number + 1,
-            title: request.body.title,
-            description: request.body.description,
-            date_echeance: date
-          });
-
-        return response.status(201).json({ message: "La tâche a été ajoutée avec succès." });
-
-
-
-
-        // let data = await this.getTasks(req,response)
-        // response.status(200).json(data);
-        // console.log(data);
-        
-    } catch (error) {
-        return response
-        .status(500)
-        .json({ general: "Echec de j'aout de tache ! "});          
-    }
-};
 
 
 exports.updateTask = async (request, response) => {

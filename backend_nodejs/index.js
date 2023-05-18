@@ -4,7 +4,7 @@ let app = express();
 
 // link : https://deeppatel23.medium.com/rest-api-with-node-js-and-firebase-4d618f1bbc60
 
-const { getTasks, deleteTask , addTask, numberItem, 
+const { getTasks , numberItem, 
     numberTaskEchue,numberTaskEnCours, numberTaskNotEnCours } = require("./endpoints/tasks");
 
  const { 
@@ -13,7 +13,9 @@ const { getTasks, deleteTask , addTask, numberItem,
     numberTaskEnCoursForUser,
     numberTaskNotEnCoursForUser,
     getTasksForUser,
-    updateTask } = require("./endpoints/tasks_private");
+    updateTask,
+    deleteTask,
+    addTask } = require("./endpoints/tasks_private");
 
 app.use(express.json());
 
@@ -27,8 +29,8 @@ const PORT = process.env.PORT || 5050;
 
 
 app.get("/api/v1/tasks", getTasks);
-app.delete("/api/v1/taskDelete/:id",deleteTask);
-app.post("/api/v1/tasks", addTask);
+
+
 app.get("/api/v1/tasks/number", numberItem);
 app.get("/api/v1/tasks/public/echue", numberTaskEchue);
 app.get("/api/v1/tasks/public/encours", numberTaskEnCours);
@@ -41,7 +43,9 @@ app.get("/api/v1/tasks/private/user/:userID", getTasksNumberUser);
 app.get("/api/v1/tasks/private/echue/user/:userID", numberTaskEchueForUser);
 app.get("/api/v1/tasks/private/encours/user/:userID", numberTaskEnCoursForUser);
 app.get("/api/v1/tasks/private/notencours/user/:userID", numberTaskNotEnCoursForUser);
+app.delete("/api/v1/tasks/private/delete/:id",deleteTask);
 app.patch("/api/v1/tasks/private", updateTask);
+app.post("/api/v1/tasks/private", addTask);
 
 
 app.get('/', (req, res) => {

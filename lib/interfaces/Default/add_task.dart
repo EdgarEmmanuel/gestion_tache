@@ -48,11 +48,13 @@ class _AddTask extends State<AddTask> {
   }
 
   void _taskDeletion() async {
-    var r = await HttpFirebase.deleteTask(globals.task?.doc_id);
-    bool _isDeleting = false;
-
-    //  print(r.body);
-    r ? _goBack() : print("erreur lors de la suppresion ! ");
+    if(globals.isFirebase){
+      var r = await HttpFirebase.deleteTask(globals.task?.doc_id);
+      r ? _goBack() : print("erreur lors de la suppresion ! ");
+    } else {
+      var r = await HttpTask.deleteTask(globals.task?.doc_id);
+      r ? _goBack() : print("erreur lors de la suppresion ! ");
+    }
   }
 
   void _updateTask() async {
@@ -65,7 +67,6 @@ class _AddTask extends State<AddTask> {
 
     if (globals.isFirebase) {
       var r = await HttpFirebase.updateTask(globals.task?.doc_id, task);
-      bool _isModifiying = false;
 
       r ? _goBack() : print("Echec de la mise a jour ! ");
     } else {
@@ -77,25 +78,29 @@ class _AddTask extends State<AddTask> {
       doc_id: globals.task?.doc_id
     );
       var r = await HttpTask.updateTask(task);
-      bool _isModifiying = false;
-
       r ? _goBack() : print("Echec de la mise a jour ! ");
-      //print("to modify");
     }
   }
 
   void _saveTask() async {
-    Task task = Task(
+     Task task = Task(
         id: null,
         title: title,
         description: description,
         date_echeance: date_echeance);
-
+    if(globals.isFirebase){
+    
     var response = await HttpFirebase.addTaskByUser(task, globals.user?.uid);
-    bool _isAdding = false;
 
     if (response == true) {
       _goBack();
+    }
+    }else {
+      var response = await HttpTask.addTask(task, globals.user?.uid);
+
+    if (response == true) {
+      _goBack();
+    }
     }
   }
 

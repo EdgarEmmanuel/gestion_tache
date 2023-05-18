@@ -96,19 +96,30 @@ class HttpTask {
     return number['number'];
   }
 
-  static Future<http.Response> deleteTask(id) async {
-    String endpoint = "api/v1/taskDelete/$id";
+  static Future<bool> deleteTask(id) async {
+    try {
+      String endpoint = "api/v1/tasks/private/delete/$id";
 
-    return await http.delete(
-      Uri.parse(BASE_URL + endpoint),
-    );
+      await http.delete(
+        Uri.parse(BASE_URL + endpoint),
+      );
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
-  static Future<http.Response> addTask(Task task) async {
-    String endpoint = "api/v1/tasks";
-    var url = Uri.parse(BASE_URL + endpoint);
+  static Future<bool> addTask(Task task, id) async {
+    try {
+      String endpoint = "api/v1/tasks/private";
+      var url = Uri.parse(BASE_URL + endpoint);
 
-    return await http.post(url, body: task.toBody());
+      await http.post(url, body: task.toBody(id));
+
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   static Future<bool> updateTask(Task task) async {
