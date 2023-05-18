@@ -343,10 +343,10 @@ class TaskItemAdmin extends StatelessWidget {
           ElevatedButton.icon(
             onPressed: () {
               globals.task = task;
-              // Navigator.push(
-              //     context,
-              //     MaterialPageRoute(
-              //         builder: (context) => const PublicTaskDetails()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const AddTaskPublic()));
             },
             icon: const Icon(Icons.arrow_forward_ios),
             label: const Text(""),

@@ -6,7 +6,7 @@ import 'package:gestion_tache/interfaces/admin/accueil_admin.dart';
 import '../../globals/globals.dart' as globals;
 import 'package:gestion_tache/http/http_task_firebase.dart';
 
-class AddTaskPublic  extends StatefulWidget {
+class AddTaskPublic extends StatefulWidget {
   const AddTaskPublic({super.key});
 
   @override
@@ -41,7 +41,7 @@ class _AddTaskPublic extends State<AddTaskPublic> {
   }
 
   void _taskDeletion() async {
-    if(globals.isFirebase){
+    if (globals.isFirebase) {
       var r = await HttpFirebase.deleteTask(globals.task?.doc_id);
       r ? _goBack() : print("erreur lors de la suppresion ! ");
     } else {
@@ -64,36 +64,34 @@ class _AddTaskPublic extends State<AddTaskPublic> {
       r ? _goBack() : print("Echec de la mise a jour ! ");
     } else {
       task = Task(
-      id: globals.task?.id,
-      title: title,
-      description: description,
-      date_echeance: date_echeance,
-      doc_id: globals.task?.doc_id
-    );
+          id: globals.task?.id,
+          title: title,
+          description: description,
+          date_echeance: date_echeance,
+          doc_id: globals.task?.doc_id);
       var r = await HttpTask.updateTask(task);
       r ? _goBack() : print("Echec de la mise a jour ! ");
     }
   }
 
   void _saveTask() async {
-     Task task = Task(
+    Task task = Task(
         id: null,
         title: title,
         description: description,
         date_echeance: date_echeance);
-    if(globals.isFirebase){
-    
-    var response = await HttpFirebase.addTaskByUser(task, globals.user?.uid);
+    if (globals.isFirebase) {
+      var response = await HttpFirebase.addTaskByUser(task, globals.user?.uid);
 
-    if (response == true) {
-      _goBack();
-    }
-    }else {
+      if (response == true) {
+        _goBack();
+      }
+    } else {
       var response = await HttpTask.addTask(task, globals.user?.uid);
 
-    if (response == true) {
-      _goBack();
-    }
+      if (response == true) {
+        _goBack();
+      }
     }
   }
 
@@ -260,72 +258,49 @@ class _AddTaskPublic extends State<AddTaskPublic> {
                     const SizedBox(
                       height: 50.0,
                     ),
-                    globals.task == null
-                        ? ElevatedButton(
-                            onPressed: () {
-                              if (_formGlobalKey.currentState!.validate()) {
-                                setState(() {
-                                  _isAdding = true;
-                                });
-                                _saveTask();
-                              }
-                            },
-                            style: ElevatedButton.styleFrom(
-                              elevation: 5.0,
-                              backgroundColor: Theme.of(context).primaryColor,
-                              fixedSize: Size(200, 50),
-                            ),
-                            child: _isAdding
-                                ? CircularProgressIndicator()
-                                : Text(
-                                    'Ajouter'.toUpperCase(),
-                                  ),
-                          )
-                        : Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              ElevatedButton(
-                                onPressed: () {
-                                  if (_formGlobalKey.currentState!.validate()) {
-                                    setState(() {
-                                      _isModifiying = true;
-                                    });
-                                    _updateTask();
-                                  }
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  elevation: 5.0,
-                                  backgroundColor:
-                                      Theme.of(context).primaryColor,
-                                  fixedSize: Size(170, 50),
-                                ),
-                                child: _isModifiying
-                                    ? CircularProgressIndicator()
-                                    : Text(
-                                        'Modifier'.toUpperCase(),
-                                      ),
-                              ),
-                              ElevatedButton(
-                                onPressed: () {
-                                  setState(() {
-                                    _isDeleting = true;
-                                  });
-                                  _taskDeletion();
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  elevation: 5.0,
-                                  backgroundColor:
-                                      Theme.of(context).primaryColorDark,
-                                  fixedSize: Size(170, 50),
-                                ),
-                                child: _isDeleting
-                                    ? CircularProgressIndicator()
-                                    : Text(
-                                        'Supprimer'.toUpperCase(),
-                                      ),
-                              )
-                            ],
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            if (_formGlobalKey.currentState!.validate()) {
+                              setState(() {
+                                _isModifiying = true;
+                              });
+                              _updateTask();
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            elevation: 5.0,
+                            backgroundColor: Theme.of(context).primaryColor,
+                            fixedSize: Size(170, 50),
                           ),
+                          child: _isModifiying
+                              ? CircularProgressIndicator()
+                              : Text(
+                                  'Modifier'.toUpperCase(),
+                                ),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              _isDeleting = true;
+                            });
+                            _taskDeletion();
+                          },
+                          style: ElevatedButton.styleFrom(
+                            elevation: 5.0,
+                            backgroundColor: Theme.of(context).primaryColorDark,
+                            fixedSize: Size(170, 50),
+                          ),
+                          child: _isDeleting
+                              ? CircularProgressIndicator()
+                              : Text(
+                                  'Supprimer'.toUpperCase(),
+                                ),
+                        )
+                      ],
+                    ),
                   ],
                 ),
               ),
