@@ -1,13 +1,10 @@
-//import 'dart:js_util';
 import 'package:gestion_tache/http/http_task.dart';
 import 'package:gestion_tache/interfaces/Default/models/task.dart';
+import 'package:gestion_tache/interfaces/admin/add_task_public.dart';
 import 'package:gestion_tache/interfaces/auth/rememberMe.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:gestion_tache/interfaces/Default/public_task.dart';
-import 'package:gestion_tache/interfaces/Default/add_task.dart';
-import 'package:gestion_tache/interfaces/Default/subcomponents/tasks.dart';
 import 'package:gestion_tache/http/http_task_firebase.dart';
 import 'package:gestion_tache/globals/globals.dart' as globals;
 import 'package:intl/intl.dart';
@@ -105,7 +102,7 @@ class _AccueilAdminState extends State<AccueilAdmin> {
 
   void _goToAddDartPage() {
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => const AddTask()));
+        context, MaterialPageRoute(builder: (context) => const AddTaskPublic()));
   }
 
   void refresh() {
@@ -173,7 +170,7 @@ class _AccueilAdminState extends State<AccueilAdmin> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Bienvenue ${globals.user?.displayName}",
+                            "Bienvenue Administrateur ${globals.user?.displayName}",
                             style: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
@@ -221,7 +218,7 @@ class _AccueilAdminState extends State<AccueilAdmin> {
               margin: EdgeInsets.only(left: 20),
               alignment: Alignment.bottomLeft,
               child: const Text(
-                "Liste des Tâches",
+                "Liste des Tâches Publiques",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
               ),
             ),
