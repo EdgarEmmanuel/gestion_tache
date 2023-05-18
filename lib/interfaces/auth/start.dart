@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:gestion_tache/interfaces/admin/accueil_admin.dart';
 import 'package:gestion_tache/interfaces/auth/rememberMe.dart';
 import 'package:gestion_tache/interfaces/auth/authEmailPasswordCheck.dart';
 import 'package:gestion_tache/globals/globals.dart' as globals;
 import '../Default/accueil.dart';
 import 'auth.dart';
+import 'authEmailPasswordCheck.dart' as authObject;
 
 class Start extends StatefulWidget {
   const Start({super.key});
@@ -29,8 +31,21 @@ class _StartState extends State<Start> {
         setState(() {
           _isLogIn = false;
         });
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => const Accueil()));
+
+        var isAdmin =
+            await authObject.AuthCheckAndCreate.isAdmin(globals.user?.uid);
+
+        if (isAdmin) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const AccueilAdmin()),
+          );
+        } else {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const Accueil()),
+          );
+        }
       } else {}
     } else {
       setState(() {

@@ -25,8 +25,6 @@ class _PasswordState extends State<Password> {
         var isAdmin =
             await authObject.AuthCheckAndCreate.isAdmin(globals.user?.uid);
 
-        print(isAdmin);
-
         if (isAdmin) {
           Navigator.push(
             context,

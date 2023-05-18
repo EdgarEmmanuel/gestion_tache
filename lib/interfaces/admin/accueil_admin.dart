@@ -110,7 +110,7 @@ class _AccueilAdminState extends State<AccueilAdmin> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            "Page d'accueil Admin",
+            "Accueil Administrateur",
             style: TextStyle(
                 color: Theme.of(context).primaryColor, fontFamily: 'Raleway'),
           ),
@@ -203,25 +203,25 @@ class _AccueilAdminState extends State<AccueilAdmin> {
                 ),
               ),
             ),
-            Container(
-              padding: const EdgeInsets.only(right: 20, bottom: 10),
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const PublicTask()));
-                },
-                style: ElevatedButton.styleFrom(
-                  elevation: 5.0,
-                  backgroundColor: Theme.of(context).primaryColor,
-                  fixedSize: const Size(170, 50),
-                ),
-                child: Text(
-                  'Tâches publiques'.toUpperCase(),
-                ),
-              ),
-            ),
+            // Container(
+            //   padding: const EdgeInsets.only(right: 20, bottom: 10),
+            //   child: ElevatedButton(
+            //     onPressed: () {
+            //       Navigator.push(
+            //           context,
+            //           MaterialPageRoute(
+            //               builder: (context) => const PublicTask()));
+            //     },
+            //     style: ElevatedButton.styleFrom(
+            //       elevation: 5.0,
+            //       backgroundColor: Theme.of(context).primaryColor,
+            //       fixedSize: const Size(170, 50),
+            //     ),
+            //     child: Text(
+            //       'Tâches publiques'.toUpperCase(),
+            //     ),
+            //   ),
+            // ),
             Container(
               margin: EdgeInsets.only(left: 20),
               alignment: Alignment.bottomLeft,
