@@ -16,10 +16,13 @@ class Tasks extends StatefulWidget {
 class _Tasks extends State<Tasks> {
   @override
   void initState() {
-    //  print('init');
     super.initState();
 
-    globals.tasks = HttpFirebase.getTaskByUser(globals.user?.uid);
+    if (globals.isFirebase) {
+      globals.tasks = HttpFirebase.getTaskByUser(globals.user?.uid);
+    } else {
+      print("faire requete au serveur web");
+    }
   }
 
   @override

@@ -1,4 +1,5 @@
 //import 'dart:js_util';
+import 'package:gestion_tache/http/http_task.dart';
 import 'package:gestion_tache/interfaces/auth/rememberMe.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -63,7 +64,18 @@ class _AccueilState extends State<Accueil> {
         });
       });
     } else {
-      print("requete vers serveur web distant");
+       HttpTask.fetchTasksNumberForUser(globals.user?.uid).then((value) {
+        setState(() {
+          taskNumber = value;
+        });
+      });
+
+      HttpTask.fetchTasksEchueNumberForUser(globals.user?.uid).then((value) {
+        setState(() {
+          taskEchue = value;
+        });
+      });
+
     }
   }
 
