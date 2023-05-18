@@ -30,12 +30,52 @@ class HttpFirebase {
     return taskList;
   }
 
+  static Future<List<Task>> getTasksPublic() async {
+    CollectionReference tasks = FirebaseFirestore.instance.collection('tasks');
+    List<Task> taskList = [];
+
+    QuerySnapshot querySnapshot = await tasks.get();
+    for (var doc in querySnapshot.docs) {
+      if (doc["userID"] == "0") {
+        var dateEcheance = (doc['date_echeance'] as Timestamp).toDate();
+        try {
+          var task = Task(
+            id: doc['id'].toString(),
+            title: doc['title'],
+            description: doc['description'],
+            date_echeance: doc['date_echeance'].toDate(),
+            doc_id: doc.id,
+          );
+          taskList.add(task);
+        } catch (e) {
+          print('Error creating task: $e');
+          taskList = [];
+        }
+      }
+    }
+
+    return taskList;
+  }
+
   static Future<int> fetchTasksNumber(userID) async {
     CollectionReference tasks = FirebaseFirestore.instance.collection('tasks');
     var number = 0;
 
     await tasks.get().then((value) => value.docs.forEach((doc) {
           if (doc['userID'] == userID) {
+            number += 1;
+          }
+        }));
+
+    return number;
+  }
+
+  static Future<int> fetchTasksNumberPublic() async {
+    CollectionReference tasks = FirebaseFirestore.instance.collection('tasks');
+    var number = 0;
+
+    await tasks.get().then((value) => value.docs.forEach((doc) {
+          if (doc['userID'] == "0") {
             number += 1;
           }
         }));

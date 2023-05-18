@@ -5,10 +5,12 @@ import 'package:gestion_tache/interfaces/Default/models/task.dart';
 
 String username = "";
 String password = "";
-User ? user ;
+User? user;
 String? errorMessage;
 String? successMessage;
 int? number = 0;
 Task? task;
+
+bool isFirebase = true;
 
 Future<List<Task>>? tasks;

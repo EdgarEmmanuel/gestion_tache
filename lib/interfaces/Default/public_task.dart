@@ -1,3 +1,4 @@
+import 'package:gestion_tache/http/http_task_firebase.dart';
 import 'package:gestion_tache/interfaces/Default/subcomponents/public_task_details.dart';
 import 'package:intl/intl.dart';
 
@@ -28,16 +29,24 @@ class _PublicTaskState extends State<PublicTask> {
   int nbTask = 0;
   void initState() {
     super.initState();
-    //globals.tasks =
 
-    tasks = HttpTask.fetchTasks();
-
-    HttpTask.fetchTasksNumber().then((value) {
-      setState(() {
-        nbTask = value;
-        print(value);
+    if (globals.isFirebase) {
+      tasks = HttpFirebase.getTasksPublic();
+      //print("here");
+      HttpFirebase.fetchTasksNumberPublic().then((value) {
+        setState(() {
+          nbTask = value;
+        });
       });
-    });
+    } else {
+      tasks = HttpTask.fetchTasks();
+
+      HttpTask.fetchTasksNumber().then((value) {
+        setState(() {
+          nbTask = value;
+        });
+      });
+    }
   }
 
   void refresh() {
