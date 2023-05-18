@@ -41,12 +41,60 @@ exports.numberTaskEchueForUser = async (req, res) => {
             let number = 0;
     
             querySnapshot.forEach((doc) => {
-                if( doc.data()['userID']== userID )
+                    if( doc.data()['userID']== userID ){
+                        let t = doc.data()["date_echeance"] ;
+                        let date_echeance = new Date(t.seconds * 1000 + t.nanoseconds / 1000000);
+                        var today = new Date();
+                        if(dateInPast(date_echeance, today)){
+                            number += 1;
+                        }
+                    }
+              });
+         res.status(201).json({ number : number });
+        
+        } catch (error) {
+        console.log(error);     
+        }
+};
+
+
+exports.numberTaskEnCoursForUser = async (req, res) => {
+    const querySnapshot = await getDocs(collection(db, "tasks"));   
+    const {userID} = req.params;
+        try{
+            let number = 0;
+    
+            querySnapshot.forEach((doc) => {
+                if(doc.data()['userID']== userID)
                 {
                     let t = doc.data()["date_echeance"] ;
                     let date_echeance = new Date(t.seconds * 1000 + t.nanoseconds / 1000000);
                     var today = new Date();
-                    if(dateInPast(date_echeance, today)){
+                    if(date_echeance.setHours(0,0,0,0) == today.setHours(0,0,0,0)) {
+                        number += 1;
+                    }
+                }
+              });
+         res.status(201).json({ number : number });
+        
+        } catch (error) {
+        console.log(error);     
+        }
+};
+
+exports.numberTaskNotEnCoursForUser = async (req, res) => {
+    const querySnapshot = await getDocs(collection(db, "tasks"));   
+    const {userID} = req.params;
+        try{
+            let number = 0;
+    
+            querySnapshot.forEach((doc) => {
+                if(doc.data()['userID']== userID)
+                {
+                    let t = doc.data()["date_echeance"] ;
+                    let date_echeance = new Date(t.seconds * 1000 + t.nanoseconds / 1000000);
+                    var today = new Date();
+                    if(!dateInPast(date_echeance, today)) {
                         number += 1;
                     }
                 }
@@ -61,26 +109,22 @@ exports.numberTaskEchueForUser = async (req, res) => {
 
 exports.getTasksForUser = async (req, response) => {
     const querySnapshot = await getDocs(collection(db, "tasks"));
+    const {userID} = req.params;
     try{
         let data = [];
 
         querySnapshot.forEach((doc) => {
-            if(doc.data()['userID']=="0")
+            if(doc.data()['userID']== userID)
             {
-            let doc_id = doc.ref.id ;
-            let t = doc.data()["date_echeance"] ;
-            let date = new Date(t.seconds * 1000 + t.nanoseconds / 1000000);
-            let obj = { id: doc.id, date_echeance_second: date, doc_id: doc_id, ...doc.data()}
-            data.push(obj);
+                let doc_id = doc.ref.id ;
+                let t = doc.data()["date_echeance"] ;
+                let date = new Date(t.seconds * 1000 + t.nanoseconds / 1000000);
+                let obj = { id: doc.id, date_echeance_second: date, doc_id: doc_id, ...doc.data()}
+                data.push(obj);
             }
 
           });
-            
-          if (response) {
-            response.status(201).json(data);
-          } else {
-            console.log("Response is undefined");
-          }
+          response.status(201).json(data);
                             
     } catch (error) {
         console.log(error);

@@ -16,16 +16,17 @@ class HttpTask {
       tasks.add(Task.fromJson(jsonParsed[i]));
     }
     return tasks;
+  
   }
 
+
   static Future<List<Task>> fetchTasksForUser(userID) async {
-    String endpoint = "api/v1/tasks/private/user/${userID}";
+    String endpoint = "api/v1/tasks/user/${userID}";
     List<Task> tasks = [];
     final response = await http.get(Uri.parse(BASE_URL + endpoint));
 
     List jsonParsed = jsonDecode(response.body);
     for (int i = 0; i < jsonParsed.length; i++) {
-      //print(jsonParsed[i]);
       tasks.add(Task.fromJson(jsonParsed[i]));
     }
     return tasks;
@@ -41,6 +42,25 @@ class HttpTask {
 
   static Future<int> fetchTasksEchueNumberForUser(userID) async {
     String endpoint = "api/v1/tasks/private/echue/user/${userID}";
+    final response = await http.get(Uri.parse(BASE_URL + endpoint));
+
+    var number = json.decode(response.body);
+    return number['number'];
+  }
+
+
+  static Future<int> fetchTasksEnCoursNumberForUser(userID) async {
+    String endpoint = "api/v1/tasks/private/encours/user/${userID}";
+    
+    final response = await http.get(Uri.parse(BASE_URL + endpoint));
+
+    var number = json.decode(response.body);
+    return number['number'];
+  }
+
+  static Future<int> fetchTasksNotEnCoursNumberForUser(userID) async {
+    String endpoint = "api/v1/tasks/private/notencours/user/${userID}";
+    
     final response = await http.get(Uri.parse(BASE_URL + endpoint));
 
     var number = json.decode(response.body);

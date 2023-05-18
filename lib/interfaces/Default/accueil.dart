@@ -76,6 +76,18 @@ class _AccueilState extends State<Accueil> {
         });
       });
 
+      HttpTask.fetchTasksEnCoursNumberForUser(globals.user?.uid).then((value) {
+        setState(() {
+          taskEnCours = value;
+        });
+      });
+
+      HttpTask.fetchTasksNotEnCoursNumberForUser(globals.user?.uid).then((value) {
+        setState(() {
+          taskNotEnCours = value;
+        });
+      });
+
     }
   }
 

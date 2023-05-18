@@ -7,8 +7,12 @@ let app = express();
 const { getTasks, deleteTask , addTask, updateTask, numberItem, 
     numberTaskEchue,numberTaskEnCours, numberTaskNotEnCours } = require("./endpoints/tasks");
 
- const { getTasksNumberUser,
-    numberTaskEchueForUser } = require("./endpoints/tasks_private");
+ const { 
+    getTasksNumberUser,
+    numberTaskEchueForUser, 
+    numberTaskEnCoursForUser,
+    numberTaskNotEnCoursForUser,
+    getTasksForUser } = require("./endpoints/tasks_private");
 
 app.use(express.json());
 
@@ -30,8 +34,12 @@ app.get("/api/v1/tasks/public/encours", numberTaskEnCours);
 app.get("/api/v1/tasks/public/notencours", numberTaskNotEnCours);
 app.patch("/api/v1/tasks", updateTask);
 
-app.get("/api/v1/tasks/private/user/:userID", getTasksNumberUser)
-app.get("/api/v1/tasks/private/echue/user/:userID", numberTaskEchueForUser)
+
+app.get("/api/v1/tasks/user/:userID", getTasksForUser);
+app.get("/api/v1/tasks/private/user/:userID", getTasksNumberUser);
+app.get("/api/v1/tasks/private/echue/user/:userID", numberTaskEchueForUser);
+app.get("/api/v1/tasks/private/encours/user/:userID", numberTaskEnCoursForUser);
+app.get("/api/v1/tasks/private/notencours/user/:userID", numberTaskNotEnCoursForUser);
 
 
 app.get('/', (req, res) => {
