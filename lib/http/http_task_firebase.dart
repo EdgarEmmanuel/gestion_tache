@@ -11,7 +11,6 @@ class HttpFirebase {
     QuerySnapshot querySnapshot = await tasks.get();
     for (var doc in querySnapshot.docs) {
       if (userID == doc['userID']) {
-        var dateEcheance = (doc['date_echeance'] as Timestamp).toDate();
         try {
           var task = Task(
             id: doc['id'].toString(),
@@ -37,7 +36,6 @@ class HttpFirebase {
     QuerySnapshot querySnapshot = await tasks.get();
     for (var doc in querySnapshot.docs) {
       if (doc["userID"] == "0") {
-        var dateEcheance = (doc['date_echeance'] as Timestamp).toDate();
         try {
           var task = Task(
             id: doc['id'].toString(),
@@ -138,7 +136,7 @@ class HttpFirebase {
     await tasks.get().then((value) => value.docs.forEach((doc) {
           if (doc['userID'] == "0") {
             var dateEcheance = (doc['date_echeance'] as Timestamp).toDate();
-            if (dateEcheance.isAfter(DateTime.now())) {
+            if (dateEcheance.isBefore(DateTime.now())) {
               number += 1;
             }
           }
