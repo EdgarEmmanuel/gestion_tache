@@ -51,6 +51,8 @@ dependencies:
   firebase_core_web: ^2.2.2
   firebase_auth_web: ^5.2.10
   path_provider: ^2.0.14
+  firebase_messaging: ^14.6.1
+  firebase_in_app_messaging: ^0.7.3+1
  # fluttertoast: ^8.2.1
 
 

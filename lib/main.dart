@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:gestion_tache/http/http_messaging.dart';
 import 'package:gestion_tache/interfaces/Default/accueil.dart';
 import 'firebase_options.dart';
+import 'package:firebase_in_app_messaging/firebase_in_app_messaging.dart';
 import 'interfaces/auth/start.dart';
 
 void main() async {
@@ -10,15 +12,9 @@ void main() async {
     name: 'flutter-gestion-tache-firebase',
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  // await Firebase.initializeApp(
-  //   options: DefaultFirebaseOptions.currentPlatform,
-  // );
-  runApp(const MyApp());
-
   
+  runApp(const MyApp());
 }
-
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -26,6 +22,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    HttpMessaging().init(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
 

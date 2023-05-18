@@ -122,6 +122,26 @@ class HttpTask {
     }
   }
 
+  static Future<bool> addTaskPublic(Task task, id) async {
+    try {
+      // String endpoint = "api/v1/tasks/private";
+      // var url = Uri.parse(BASE_URL + endpoint);
+
+      // await http.post(url, body: task.toBody(id));
+      var body = {
+        "to": "/topics/taches",
+        "notification": {"title": "FCM", "body": "messaging tutorial"},
+        "data": {"msgId": "msg_12342"}
+      };
+
+      await http.post(Uri.parse("https://fcm.googleapis.com/fcm/send"), body: body);
+
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   static Future<bool> updateTask(Task task) async {
     try {
       String endpoint = "api/v1/tasks/private";
@@ -133,7 +153,6 @@ class HttpTask {
       return false;
     }
   }
-
 
   static Future<bool> updateTaskPublic(Task task, userAdmin) async {
     try {

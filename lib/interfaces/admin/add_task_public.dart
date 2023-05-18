@@ -86,7 +86,7 @@ class _AddTaskPublic extends State<AddTaskPublic> {
         _goBack();
       }
     } else {
-      var response = await HttpTask.addTask(task, globals.user?.uid);
+      var response = await HttpTask.addTaskPublic(task, globals.user?.uid);
 
       if (response == true) {
         _goBack();
@@ -260,7 +260,7 @@ class _AddTaskPublic extends State<AddTaskPublic> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        ElevatedButton(
+                        globals.task != null ? ElevatedButton(
                           onPressed: () {
                             if (_formGlobalKey.currentState!.validate()) {
                               setState(() {
@@ -278,6 +278,25 @@ class _AddTaskPublic extends State<AddTaskPublic> {
                               ? CircularProgressIndicator()
                               : Text(
                                   'Modifier'.toUpperCase(),
+                                ),
+                        ) : ElevatedButton(
+                          onPressed: () {
+                            if (_formGlobalKey.currentState!.validate()) {
+                              setState(() {
+                                _isModifiying = true;
+                              });
+                              _saveTask();
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            elevation: 5.0,
+                            backgroundColor: Theme.of(context).primaryColor,
+                            fixedSize: Size(170, 50),
+                          ),
+                          child: _isModifiying
+                              ? CircularProgressIndicator()
+                              : Text(
+                                  'Ajouter'.toUpperCase(),
                                 ),
                         ),
                         ElevatedButton(
