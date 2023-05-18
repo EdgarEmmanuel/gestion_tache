@@ -133,4 +133,17 @@ class HttpTask {
       return false;
     }
   }
+
+
+  static Future<bool> updateTaskPublic(Task task, userAdmin) async {
+    try {
+      String endpoint = "api/v1/tasks/public/user/${userAdmin}";
+      var url = Uri.parse(BASE_URL + endpoint);
+
+      await http.patch(url, body: task.toBodyUpdate());
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
 }

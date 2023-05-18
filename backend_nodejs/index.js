@@ -17,6 +17,9 @@ const { getTasks , numberItem,
     deleteTask,
     addTask } = require("./endpoints/tasks_private");
 
+
+const { updateTaskPublic } = require("./endpoints/tasks_public");
+
 app.use(express.json());
 
 app.use(bodyParser.urlencoded({
@@ -46,6 +49,10 @@ app.get("/api/v1/tasks/private/notencours/user/:userID", numberTaskNotEnCoursFor
 app.delete("/api/v1/tasks/private/delete/:id",deleteTask);
 app.patch("/api/v1/tasks/private", updateTask);
 app.post("/api/v1/tasks/private", addTask);
+
+
+
+app.patch("/api/v1/tasks/public/user/:userAdmin", updateTaskPublic);
 
 
 app.get('/', (req, res) => {
