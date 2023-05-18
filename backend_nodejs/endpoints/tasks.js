@@ -71,10 +71,65 @@ exports.numberItem = async (req, res) => {
           //  .status(500)
           //  .json({ general: "Something went wrong, please try again"});          
         }
-
-    
-
 };
+
+
+var dateInPast = function(firstDate, secondDate) {
+    if (firstDate.setHours(0, 0, 0, 0) <= secondDate.setHours(0, 0, 0, 0)) {
+      return true;
+    }
+  
+    return false;
+};
+
+
+exports.numberTaskEchue = async (req, res) => {
+    const querySnapshot = await getDocs(collection(db, "tasks"));   
+        try{
+            let number = 0;
+    
+            querySnapshot.forEach((doc) => {
+                if(doc.data()['userID']=="0")
+                {
+                    let t = doc.data()["date_echeance"] ;
+                    let date_echeance = new Date(t.seconds * 1000 + t.nanoseconds / 1000000);
+                    var today = new Date();
+                    if(dateInPast(date_echeance, today)){
+                        number += 1;
+                    }
+                }
+              });
+         res.status(201).json({ number : number });
+        
+        } catch (error) {
+        console.log(error);     
+        }
+};
+
+
+exports.numberTaskEnCours = async (req, res) => {
+    const querySnapshot = await getDocs(collection(db, "tasks"));   
+        try{
+            let number = 0;
+    
+            querySnapshot.forEach((doc) => {
+                if(doc.data()['userID']=="0")
+                {
+                    let t = doc.data()["date_echeance"] ;
+                    let date_echeance = new Date(t.seconds * 1000 + t.nanoseconds / 1000000);
+                    var today = new Date();
+                    if(date_echeance.setHours(0,0,0,0) == today.setHours(0,0,0,0)) {
+                        number += 1;
+                    }
+                }
+              });
+         res.status(201).json({ number : number });
+        
+        } catch (error) {
+        console.log(error);     
+        }
+};
+
 
 
 exports.addTask = async (request, response) => {
