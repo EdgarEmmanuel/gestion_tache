@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gestion_tache/globals/globals.dart' as globals;
 import 'package:gestion_tache/interfaces/auth/rememberMe.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AuthCheckAndCreate {
   static Future<String?> userLogIn(String mail, String pwd) async {
@@ -16,7 +17,7 @@ class AuthCheckAndCreate {
         'password': pwd,
         'name': result.user?.displayName
       };
-     await rememberMe.writeAuthCredential(user);
+      await rememberMe.writeAuthCredential(user);
 
       return null;
     } on FirebaseAuthException catch (ex) {
@@ -47,5 +48,20 @@ class AuthCheckAndCreate {
       print(ex.message);
       return false;
     }
+  }
+
+  static Future<bool> isAdmin(userID) async {
+    CollectionReference tasks =
+        FirebaseFirestore.instance.collection('administrators');
+    bool isAdmin = false;
+
+    await tasks.get().then((value) => value.docs.forEach((doc) {
+          if (doc['userID'] == userID) {
+            isAdmin = true;
+            return;
+          }
+        }));
+
+    return isAdmin;
   }
 }

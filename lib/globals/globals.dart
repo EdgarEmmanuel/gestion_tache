@@ -12,5 +12,6 @@ int? number = 0;
 Task? task;
 
 bool isFirebase = false;
+bool isAdmin = false;
 
 Future<List<Task>>? tasks;

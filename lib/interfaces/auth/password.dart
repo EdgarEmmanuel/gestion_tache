@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gestion_tache/interfaces/Default/accueil.dart';
+import 'package:gestion_tache/interfaces/admin/accueil_admin.dart';
 import '../../globals/globals.dart' as globals;
 import 'auth.dart';
 import 'authEmailPasswordCheck.dart' as authObject;
@@ -20,28 +21,33 @@ class _PasswordState extends State<Password> {
         setState(() {
           _isAuthenticating = false;
         });
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const Accueil()),
-        );
+
+        var isAdmin =
+            await authObject.AuthCheckAndCreate.isAdmin(globals.user?.uid);
+
+        print(isAdmin);
+
+        if (isAdmin) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const AccueilAdmin()),
+          );
+        } else {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const Accueil()),
+          );
+        }
       } else {
-        print(response);
         globals.errorMessage = "Adresse email ou/et mots de passe incorrecte .";
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => const Auth()));
       }
-    } catch (e) {}
-
-    // if (username == trueUsername && password == truePassword) {
-    //   globals.errorMessage = trueName;
-    //   Navigator.push(
-    //           context,
-    //           MaterialPageRoute(builder: (context) => const Accueil()),
-    //         );
-    // } else {
-    //   globals.errorMessage = "Mot de Passe ou Email Incorrect(s)";
-    //   widget.onNext(1);
-    // }
+    } catch (e) {
+      globals.errorMessage = "Adresse email ou/et mots de passe incorrecte .";
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => const Auth()));
+    }
   }
 
   void resetPassword(email) async {
