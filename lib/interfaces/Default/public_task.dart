@@ -4,11 +4,9 @@ import 'package:intl/intl.dart';
 
 import 'package:flutter/material.dart';
 import 'package:gestion_tache/http/http_task.dart';
-import 'package:intl/intl.dart';
 import '../../globals/globals.dart' as globals;
 
 import 'accueil.dart';
-import 'add_task.dart';
 import 'models/task.dart';
 
 class PublicTask extends StatefulWidget {
