@@ -70,6 +70,54 @@ class HttpFirebase {
     return number;
   }
 
+  static Future<int> fetchTasksNumberEchueForUser(userID) async {
+    CollectionReference tasks = FirebaseFirestore.instance.collection('tasks');
+    var number = 0;
+
+    await tasks.get().then((value) => value.docs.forEach((doc) {
+          if (doc['userID'] == userID) {
+            var dateEcheance = (doc['date_echeance'] as Timestamp).toDate();
+            if (dateEcheance.isBefore(DateTime.now())) {
+              number += 1;
+            }
+          }
+        }));
+
+    return number;
+  }
+
+  static Future<int> fetchTasksEnCoursNumberForUser(userID) async {
+    CollectionReference tasks = FirebaseFirestore.instance.collection('tasks');
+    var number = 0;
+
+    await tasks.get().then((value) => value.docs.forEach((doc) {
+          if (doc['userID'] == userID) {
+            var dateEcheance = (doc['date_echeance'] as Timestamp).toDate();
+            if (dateEcheance.isAtSameMomentAs(DateTime.now())) {
+              number += 1;
+            }
+          }
+        }));
+
+    return number;
+  }
+
+  static Future<int> fetchTasksNumberNotEnCoursForUser(userID) async {
+    CollectionReference tasks = FirebaseFirestore.instance.collection('tasks');
+    var number = 0;
+
+    await tasks.get().then((value) => value.docs.forEach((doc) {
+          if (doc['userID'] == userID) {
+            var dateEcheance = (doc['date_echeance'] as Timestamp).toDate();
+            if (dateEcheance.isAfter(DateTime.now())) {
+              number += 1;
+            }
+          }
+        }));
+
+    return number;
+  }
+
   static Future<int> fetchTasksNumberPublic() async {
     CollectionReference tasks = FirebaseFirestore.instance.collection('tasks');
     var number = 0;
@@ -90,7 +138,7 @@ class HttpFirebase {
     await tasks.get().then((value) => value.docs.forEach((doc) {
           if (doc['userID'] == "0") {
             var dateEcheance = (doc['date_echeance'] as Timestamp).toDate();
-            if(dateEcheance.isAfter(DateTime.now())){
+            if (dateEcheance.isAfter(DateTime.now())) {
               number += 1;
             }
           }
@@ -106,7 +154,7 @@ class HttpFirebase {
     await tasks.get().then((value) => value.docs.forEach((doc) {
           if (doc['userID'] == "0") {
             var dateEcheance = (doc['date_echeance'] as Timestamp).toDate();
-            if(dateEcheance.isAtSameMomentAs(DateTime.now())){
+            if (dateEcheance.isAtSameMomentAs(DateTime.now())) {
               number += 1;
             }
           }
@@ -115,7 +163,6 @@ class HttpFirebase {
     return number;
   }
 
-
   static Future<int> fetchTasksNumberNotEnCoursPublic() async {
     CollectionReference tasks = FirebaseFirestore.instance.collection('tasks');
     var number = 0;
@@ -123,7 +170,7 @@ class HttpFirebase {
     await tasks.get().then((value) => value.docs.forEach((doc) {
           if (doc['userID'] == "0") {
             var dateEcheance = (doc['date_echeance'] as Timestamp).toDate();
-            if(dateEcheance.isBefore(DateTime.now())){
+            if (dateEcheance.isBefore(DateTime.now())) {
               number += 1;
             }
           }

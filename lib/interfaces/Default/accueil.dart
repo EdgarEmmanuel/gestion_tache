@@ -19,6 +19,11 @@ class Accueil extends StatefulWidget {
 }
 
 class _AccueilState extends State<Accueil> {
+  int taskEchue = 0;
+  int taskEnCours = 0;
+  int taskNotEnCours = 0;
+  int taskNumber = 0;
+
   void _deleteLoginCredentials() {
     rememberMe.logOut();
   }
@@ -32,15 +37,34 @@ class _AccueilState extends State<Accueil> {
   @override
   void initState() {
     super.initState();
-    //globals.tasks =
-    print("global=${globals.number}");
 
-    HttpFirebase.fetchTasksNumber(globals.user?.uid).then((value) {
-      setState(() {
-        print(value);
-        globals.number = value;
+    if (globals.isFirebase) {
+      HttpFirebase.fetchTasksNumber(globals.user?.uid).then((value) {
+        setState(() {
+          taskNumber = value;
+        });
       });
-    });
+
+      HttpFirebase.fetchTasksNumberEchueForUser(globals.user?.uid).then((value) {
+        setState(() {
+          taskEchue = value;
+        });
+      });
+
+      HttpFirebase.fetchTasksEnCoursNumberForUser(globals.user?.uid).then((value) {
+        setState(() {
+          taskEnCours = value;
+        });
+      });
+
+      HttpFirebase.fetchTasksNumberNotEnCoursForUser(globals.user?.uid).then((value) {
+        setState(() {
+          taskNotEnCours = value;
+        });
+      });
+    } else {
+      print("requete vers serveur web distant");
+    }
   }
 
   int _selectedIndex = 0;
@@ -121,7 +145,28 @@ class _AccueilState extends State<Accueil> {
                             height: 15,
                           ),
                           Text(
-                            "Nombre de tâche total : ${globals.number != null ? globals.number : '0'}",
+                            "Nombre de tâche total : ${taskNumber}",
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 17),
+                          ),
+                          Text(
+                            "Tache echue : ${taskEchue}",
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 17),
+                          ),
+                          Text(
+                            "Tache en cours : ${taskEnCours}",
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 17),
+                          ),
+                          Text(
+                            "Tache qui ne sont pas en cours : ${taskNotEnCours}",
                             style: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
