@@ -83,13 +83,15 @@ class TaskItem extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(task.title),
-              const SizedBox(height: 10.0),
-              Text(formatDate())
-            ],
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(task.title),
+                const SizedBox(height: 10.0),
+                Text(formatDate())
+              ],
+            ),
           ),
           ElevatedButton.icon(
             onPressed: () {

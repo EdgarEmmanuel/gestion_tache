@@ -35,13 +35,6 @@ class _AddTask extends State<AddTask> {
   }
 
   void _goBack() async {
-    //   HttpFirebase.getTaskByUser(0);
-
-    // var response = await HttpFirebase.updateTask("zVIatS9wpcVUMqyr3ece", t);
-    // DocumentReference response = await HttpFirebase.addTaskByUser(t, "1");
-    //  var response = await HttpFirebase.deleteTask("ZX9ISmFL0anFKriuUczH");
-    //   print(response);
-    //pour que le task qui est dans global soit réinitialiser si on retourne a l'acceuil , autre il risque de conserver les donnés du precendent task et dés qu'on esssaye d'ajouter un task , c'est se task la qui va se charger
     globals.task = null;
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => const Accueil()));
