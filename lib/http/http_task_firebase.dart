@@ -223,4 +223,20 @@ class HttpFirebase {
       return false;
     }
   }
+
+
+  static Future<bool> updateTaskPublic(id, Task task, userAdmin) async {
+    CollectionReference tasks = FirebaseFirestore.instance.collection('tasks');
+    try {
+      await tasks.doc(id).update({
+        'title': task.title,
+        'description': task.description,
+        'date_echeance': task.date_echeance,
+        'modify_by_user': userAdmin
+      });
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
 }

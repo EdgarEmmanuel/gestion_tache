@@ -59,8 +59,8 @@ class _AddTaskPublic extends State<AddTaskPublic> {
     );
 
     if (globals.isFirebase) {
-      //var r = await HttpFirebase.updateTask(globals.task?.doc_id, task);
-      //r ? _goBack() : print("Echec de la mise a jour ! ");
+      var r = await HttpFirebase.updateTaskPublic(globals.task?.doc_id, task, globals.user?.uid);
+      r ? _goBack() : print("Echec de la mise a jour ! ");
     } else {
       task = Task(
           id: globals.task?.id,
