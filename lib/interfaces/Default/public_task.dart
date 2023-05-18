@@ -27,15 +27,24 @@ class _PublicTaskState extends State<PublicTask> {
 
   Future<List<Task>>? tasks;
   int nbTask = 0;
+  int taskEchue = 0;
+  int taskEnCours = 0;
+  int taskNotEnCours = 0;
+
   void initState() {
     super.initState();
 
     if (globals.isFirebase) {
       tasks = HttpFirebase.getTasksPublic();
-      //print("here");
       HttpFirebase.fetchTasksNumberPublic().then((value) {
         setState(() {
           nbTask = value;
+        });
+      });
+
+      HttpFirebase.fetchTasksNumberEchuePublic().then((value) {
+        setState(() {
+          taskEchue = value;
         });
       });
     } else {
@@ -108,7 +117,28 @@ class _PublicTaskState extends State<PublicTask> {
                         height: 15,
                       ),
                       Text(
-                        "Nombre de tache total : ${nbTask}",
+                        "Tache total : ${nbTask}",
+                        style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 17),
+                      ),
+                      Text(
+                        "Tache echue : ${taskEchue}",
+                        style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 17),
+                      ),
+                      Text(
+                        "Tache en cours : ${nbTask}",
+                        style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 17),
+                      ),
+                      Text(
+                        "Tache qui ne sont pas en cours : ${nbTask}",
                         style: const TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,

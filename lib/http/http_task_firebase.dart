@@ -83,6 +83,22 @@ class HttpFirebase {
     return number;
   }
 
+  static Future<int> fetchTasksNumberEchuePublic() async {
+    CollectionReference tasks = FirebaseFirestore.instance.collection('tasks');
+    var number = 0;
+
+    await tasks.get().then((value) => value.docs.forEach((doc) {
+          if (doc['userID'] == "0") {
+            var dateEcheance = (doc['date_echeance'] as Timestamp).toDate();
+            if(dateEcheance.isAfter(DateTime.now())){
+              number += 1;
+            }
+          }
+        }));
+
+    return number;
+  }
+
   static Future<bool> addTaskByUser(Task task, String? userID) async {
     CollectionReference tasks = FirebaseFirestore.instance.collection('tasks');
     QuerySnapshot querySnapshot = await tasks.get();
