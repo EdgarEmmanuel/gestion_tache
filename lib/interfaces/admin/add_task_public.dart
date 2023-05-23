@@ -58,7 +58,8 @@ class _AddTaskPublic extends State<AddTaskPublic> {
     );
 
     if (globals.isFirebase) {
-      var r = await HttpFirebase.updateTaskPublicByAdmin(globals.task?.doc_id, task, globals.user?.uid);
+      var r = await HttpFirebase.updateTaskPublicByAdmin(
+          globals.task?.doc_id, task, globals.user?.uid);
       r ? _goBack() : print("Echec de la mise a jour ! ");
     } else {
       task = Task(
@@ -78,19 +79,25 @@ class _AddTaskPublic extends State<AddTaskPublic> {
         title: title,
         description: description,
         date_echeance: date_echeance);
-    if (globals.isFirebase) {
-      var response = await HttpFirebase.addTaskByUser(task, globals.user?.uid);
 
-      if (response == true) {
-        _goBack();
-      }
-    } else {
-      var response = await HttpTask.addTaskPublicByAdmin(task, globals.user?.uid);
+    var response = await HttpTask.addTaskPublicByAdmin(task, globals.user?.uid);
 
-      if (response == true) {
-        _goBack();
-      }
+    if (response == true) {
+      _goBack();
     }
+    // if (globals.isFirebase) {
+    //   var response = await HttpFirebase.addTaskByUser(task, globals.user?.uid);
+
+    //   if (response == true) {
+    //     _goBack();
+    //   }
+    // } else {
+    //   var response = await HttpTask.addTaskPublicByAdmin(task, globals.user?.uid);
+
+    //   if (response == true) {
+    //     _goBack();
+    //   }
+    // }
   }
 
   bool isValidText(String text) {
@@ -259,63 +266,98 @@ class _AddTaskPublic extends State<AddTaskPublic> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        globals.task != null ? ElevatedButton(
-                          onPressed: () {
-                            if (_formGlobalKey.currentState!.validate()) {
-                              setState(() {
-                                _isModifiying = true;
-                              });
-                              _updateTask();
-                            }
-                          },
-                          style: ElevatedButton.styleFrom(
-                            elevation: 5.0,
-                            backgroundColor: Theme.of(context).primaryColor,
-                            fixedSize: Size(170, 50),
-                          ),
-                          child: _isModifiying
-                              ? CircularProgressIndicator()
-                              : Text(
-                                  'Modifier'.toUpperCase(),
+                        globals.task != null
+                            ? Container(
+                                child: Row(
+                                  children: [
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          _isDeleting = true;
+                                        });
+                                        _taskDeletion();
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        elevation: 5.0,
+                                        backgroundColor:
+                                            Theme.of(context).primaryColorDark,
+                                        fixedSize: Size(170, 50),
+                                      ),
+                                      child: _isDeleting
+                                          ? CircularProgressIndicator()
+                                          : Text(
+                                              'Supprimer'.toUpperCase(),
+                                            ),
+                                    ),
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        if (_formGlobalKey.currentState!
+                                            .validate()) {
+                                          setState(() {
+                                            _isModifiying = true;
+                                          });
+                                          _updateTask();
+                                        }
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        elevation: 5.0,
+                                        backgroundColor:
+                                            Theme.of(context).primaryColor,
+                                        fixedSize: Size(170, 50),
+                                      ),
+                                      child: _isModifiying
+                                          ? CircularProgressIndicator()
+                                          : Text(
+                                              'Modifier'.toUpperCase(),
+                                            ),
+                                    ),
+                                  ],
                                 ),
-                        ) : ElevatedButton(
-                          onPressed: () {
-                            if (_formGlobalKey.currentState!.validate()) {
-                              setState(() {
-                                _isModifiying = true;
-                              });
-                              _saveTask();
-                            }
-                          },
-                          style: ElevatedButton.styleFrom(
-                            elevation: 5.0,
-                            backgroundColor: Theme.of(context).primaryColor,
-                            fixedSize: Size(170, 50),
-                          ),
-                          child: _isModifiying
-                              ? CircularProgressIndicator()
-                              : Text(
-                                  'Ajouter'.toUpperCase(),
+                              )
+                            : Container(
+                                child: Row(
+                                  children: [
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        if (_formGlobalKey.currentState!
+                                            .validate()) {
+                                          setState(() {
+                                            _isModifiying = true;
+                                          });
+                                          _saveTask();
+                                        }
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        elevation: 5.0,
+                                        backgroundColor:
+                                            Theme.of(context).primaryColor,
+                                        fixedSize: Size(170, 50),
+                                      ),
+                                      child: _isModifiying
+                                          ? CircularProgressIndicator()
+                                          : Text(
+                                              'Ajouter'.toUpperCase(),
+                                            ),
+                                    ),
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        _goBack();
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        elevation: 5.0,
+                                        backgroundColor:
+                                            Theme.of(context).shadowColor,
+                                        fixedSize: Size(170, 50),
+                                      ),
+                                      child: _isModifiying
+                                          ? CircularProgressIndicator()
+                                          : Text(
+                                              'Annuler'.toUpperCase(),
+                                            ),
+                                    )
+                                  ],
                                 ),
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              _isDeleting = true;
-                            });
-                            _taskDeletion();
-                          },
-                          style: ElevatedButton.styleFrom(
-                            elevation: 5.0,
-                            backgroundColor: Theme.of(context).primaryColorDark,
-                            fixedSize: Size(170, 50),
-                          ),
-                          child: _isDeleting
-                              ? CircularProgressIndicator()
-                              : Text(
-                                  'Supprimer'.toUpperCase(),
-                                ),
-                        )
+                              ),
                       ],
                     ),
                   ],
