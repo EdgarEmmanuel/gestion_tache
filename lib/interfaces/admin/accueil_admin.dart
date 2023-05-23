@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:gestion_tache/http/http_task_firebase.dart';
 import 'package:gestion_tache/globals/globals.dart' as globals;
 import 'package:intl/intl.dart';
+import '../dark_mode_switch.dart';
+
 
 import '../auth/auth.dart';
 
@@ -221,6 +223,7 @@ class _AccueilAdminState extends State<AccueilAdmin> {
                 ),
               ),
             ),
+            DarkModeSwitch(),
             Container(
               margin: EdgeInsets.only(left: 20),
               alignment: Alignment.bottomLeft,

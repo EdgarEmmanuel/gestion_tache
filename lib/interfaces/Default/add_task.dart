@@ -5,6 +5,7 @@ import 'package:date_field/date_field.dart';
 import 'package:gestion_tache/interfaces/Default/models/task.dart';
 import '../../globals/globals.dart' as globals;
 import 'package:gestion_tache/http/http_task_firebase.dart';
+import '../dark_mode_switch.dart';
 
 class AddTask extends StatefulWidget {
   const AddTask({super.key});
@@ -329,6 +330,7 @@ class _AddTask extends State<AddTask> {
                   ],
                 ),
               ),
+              DarkModeSwitch(),
             ],
           ),
         ),

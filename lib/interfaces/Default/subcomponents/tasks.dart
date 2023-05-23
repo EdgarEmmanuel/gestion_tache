@@ -5,6 +5,7 @@ import 'package:gestion_tache/interfaces/Default/add_task.dart';
 import 'package:gestion_tache/interfaces/Default/models/task.dart';
 import 'package:intl/intl.dart';
 import '../../../globals/globals.dart' as globals;
+import '../../dark_mode_switch.dart';
 
 class Tasks extends StatefulWidget {
   const Tasks({super.key});
@@ -107,7 +108,9 @@ class TaskItem extends StatelessWidget {
                   MaterialStatePropertyAll(Theme.of(context).primaryColor),
             ),
           ),
+          DarkModeSwitch(),
         ],
+        
       ),
     );
   }

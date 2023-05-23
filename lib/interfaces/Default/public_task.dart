@@ -8,6 +8,7 @@ import '../../globals/globals.dart' as globals;
 
 import 'accueil.dart';
 import 'models/task.dart';
+import '../dark_mode_switch.dart';
 
 class PublicTask extends StatefulWidget {
   const PublicTask({super.key});
@@ -171,7 +172,8 @@ class _PublicTaskState extends State<PublicTask> {
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                             fontSize: 17),
-                      )
+                      ),
+                      DarkModeSwitch(),
                     ],
                   ),
                 ],

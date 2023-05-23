@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gestion_tache/globals/globals.dart' as globals;
 import 'package:date_field/date_field.dart';
 import 'package:gestion_tache/interfaces/Default/public_task.dart';
+import '../../dark_mode_switch.dart';
 
 class PublicTaskDetails extends StatefulWidget {
   const PublicTaskDetails({super.key});
@@ -131,6 +132,7 @@ class _PublicTaskDetailsState extends State<PublicTaskDetails> {
                   ],
                 ),
               ),
+              DarkModeSwitch(),
             ],
           ),
         ),
