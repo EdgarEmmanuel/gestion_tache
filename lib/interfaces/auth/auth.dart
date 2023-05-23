@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:gestion_tache/interfaces/auth/authEmailPasswordCheck.dart';
 import 'package:gestion_tache/interfaces/auth/password.dart';
 import 'package:gestion_tache/interfaces/auth/register.dart';
 import '../../globals/globals.dart' as globals;
+import 'package:flutter_signin_button/flutter_signin_button.dart';
 
 class Auth extends StatefulWidget {
   const Auth({super.key});
@@ -152,7 +154,7 @@ class _AuthState extends State<Auth> {
                                     : () {
                                         if (_formGlobalKey.currentState!
                                             .validate()) {
-                                          print('form validé');
+                                          //print('form validé');
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(
@@ -197,6 +199,23 @@ class _AuthState extends State<Auth> {
                             ),
                           ],
                         ),
+                      ),
+                      Column(
+                        children: [
+                          SignInButton(
+                            Buttons.Google,
+                            onPressed: () async {
+                              await AuthCheckAndCreate().googleSignIn(context);
+                            },
+                          ),
+                          SignInButton(
+                            Buttons.Facebook,
+                            onPressed: () async {
+                              await AuthCheckAndCreate()
+                                  .signInWithFacebook(context);
+                            },
+                          )
+                        ],
                       ),
                     ],
                   ),
