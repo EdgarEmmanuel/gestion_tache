@@ -18,6 +18,7 @@ class _StartState extends State<Start> {
   bool _isLogIn = true;
 
   void initState() {
+    super.initState();
     loadAuthCredential();
     _isLogIn = true;
   }

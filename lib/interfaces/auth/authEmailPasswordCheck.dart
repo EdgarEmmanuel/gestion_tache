@@ -73,7 +73,7 @@ class AuthCheckAndCreate {
   }
 
   Future<void> googleSignIn(BuildContext context) async {
-    final storage = FlutterSecureStorage();
+    //final storage = FlutterSecureStorage();
 
     AndroidOptions _getAndroidOptions() => const AndroidOptions(
           encryptedSharedPreferences: true,

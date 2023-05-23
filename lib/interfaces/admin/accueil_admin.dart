@@ -224,12 +224,6 @@ class _AccueilAdminState extends State<AccueilAdmin> {
             ),
             Expanded(
               child: SingleChildScrollView(
-                child: Expanded(
-                  child: RefreshIndicator(
-                    onRefresh: () async {
-                      refresh();
-                    },
-                    child: SingleChildScrollView(
                       child: FutureBuilder<List<Task>>(
                           future: tasks,
                           builder: (context, snapshot) {
@@ -265,9 +259,7 @@ class _AccueilAdminState extends State<AccueilAdmin> {
                             return const SizedBox.shrink();
                           }),
                     ),
-                  ),
-                ),
-              ),
+                  
             ),
           ],
         ),
