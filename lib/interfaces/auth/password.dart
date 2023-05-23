@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gestion_tache/interfaces/Default/accueil.dart';
 import 'package:gestion_tache/interfaces/admin/accueil_admin.dart';
-import 'package:gestion_tache/interfaces/dark_mode_switch.dart';
 import '../../globals/globals.dart' as globals;
 import 'auth.dart';
 import 'authEmailPasswordCheck.dart' as authObject;
@@ -227,7 +226,6 @@ class _PasswordState extends State<Password> {
                     ],
                   ),
                 ),
-                DarkModeSwitch(),
               ],
             ),
           ),
