@@ -18,7 +18,8 @@ const { getTasks , numberItem,
     addTask } = require("./endpoints/tasks_private");
 
 
-const { updateTaskPublic } = require("./endpoints/tasks_public");
+const { updateTaskPublic, addTaskPublic } = require("./endpoints/tasks_public");
+const { sendNotification } = require('./util/admin_firebase');
 
 app.use(express.json());
 
@@ -51,7 +52,11 @@ app.patch("/api/v1/tasks/private", updateTask);
 app.post("/api/v1/tasks/private", addTask);
 
 
-
+app.post("/api/v1/tasks/public/create", (req, res) => {
+    addTaskPublic(req, res);
+    sendNotification(req, res);
+    return res.status(201).json({ message: "La tâche a été ajoutée avec succès." });
+});
 app.patch("/api/v1/tasks/public/user/:userAdmin", updateTaskPublic);
 
 

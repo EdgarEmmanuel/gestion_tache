@@ -10,6 +10,8 @@ String? errorMessage;
 String? successMessage;
 int? number = 0;
 Task? task;
+Map<String, dynamic> notification = {};
+int? notificationNumber = 0;
 
 bool isFirebase = false;
 bool isAdmin = false;

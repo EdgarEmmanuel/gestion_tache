@@ -1,15 +1,16 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:gestion_tache/globals/globals.dart' as globals;
 
 class HttpMessaging {
-  init(context) async {
+  init() async {
     final fcmToken = await FirebaseMessaging.instance.getToken();
 
     //print("fcmtoken ${fcmToken}");
 
     FirebaseMessaging messaging = FirebaseMessaging.instance;
 
-    messaging.subscribeToTopic("taches");
+    messaging.subscribeToTopic("taches_publiques");
 
     NotificationSettings settings = await messaging.requestPermission(
       alert: true,
@@ -22,29 +23,11 @@ class HttpMessaging {
     );
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      // print('Got a message whilst in the foreground!');
-      // print('Message data: ${message.data}');
+      print('Got a message whilst in the foreground!');
+      print('Message data: ${message.data}');
 
-      // if (message.notification != null) {
-      //   print('Message also contained a notification: ${message.notification}');
-      // }
-
-      showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text("Notification"),
-              content: Text(message.notification!.body!),
-              actions: [
-                TextButton(
-                  child: Text("Ok"),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                )
-              ],
-            );
-          });
+      globals.notification = message.data;
+      globals.notificationNumber = 1;
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {

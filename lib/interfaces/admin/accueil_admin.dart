@@ -1,6 +1,7 @@
 import 'package:gestion_tache/http/http_task.dart';
 import 'package:gestion_tache/interfaces/Default/models/task.dart';
 import 'package:gestion_tache/interfaces/admin/add_task_public.dart';
+import 'package:gestion_tache/interfaces/admin/parameter.dart';
 import 'package:gestion_tache/interfaces/auth/rememberMe.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -95,14 +96,20 @@ class _AccueilAdminState extends State<AccueilAdmin> {
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
+    //print(index);
     setState(() {
       _selectedIndex = index;
     });
+
+    if(_selectedIndex == 2) {
+      Navigator.push(
+        context, MaterialPageRoute(builder: (context) => const Parameter()));
+    }
   }
 
   void _goToAddDartPage() {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => const AddTaskPublic()));
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => const AddTaskPublic()));
   }
 
   void refresh() {
@@ -224,42 +231,37 @@ class _AccueilAdminState extends State<AccueilAdmin> {
             ),
             Expanded(
               child: SingleChildScrollView(
-                      child: FutureBuilder<List<Task>>(
-                          future: tasks,
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return const CircularProgressIndicator();
-                            } else if (snapshot.hasData) {
-                              if (snapshot.data?.isEmpty == true) {
-                                return const SingleChildScrollView(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      SizedBox(height: 20),
-                                      Text("Il n'y a  aucune tâche publique "),
-                                    ],
-                                  ),
-                                );
-                              } else {
-                                return ListView.builder(
-                                    shrinkWrap: true,
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    padding: const EdgeInsets.all(8),
-                                    itemCount: snapshot.data?.length,
-                                    itemBuilder: (context, index) {
-                                      return TaskItemAdmin(
-                                          task:
-                                              snapshot.data!.elementAt(index));
-                                    });
-                              }
-                            }
-                            return const SizedBox.shrink();
-                          }),
-                    ),
-                  
+                child: FutureBuilder<List<Task>>(
+                    future: tasks,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const CircularProgressIndicator();
+                      } else if (snapshot.hasData) {
+                        if (snapshot.data?.isEmpty == true) {
+                          return const SingleChildScrollView(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SizedBox(height: 20),
+                                Text("Il n'y a  aucune tâche publique "),
+                              ],
+                            ),
+                          );
+                        } else {
+                          return ListView.builder(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              padding: const EdgeInsets.all(8),
+                              itemCount: snapshot.data?.length,
+                              itemBuilder: (context, index) {
+                                return TaskItemAdmin(
+                                    task: snapshot.data!.elementAt(index));
+                              });
+                        }
+                      }
+                      return const SizedBox.shrink();
+                    }),
+              ),
             ),
           ],
         ),
@@ -280,7 +282,7 @@ class _AccueilAdminState extends State<AccueilAdmin> {
               ),
               BottomNavigationBarItem(
                 icon: const Icon(Icons.chat_bubble_outline),
-                label: 'Business',
+                label: 'Business${globals.notificationNumber}',
                 backgroundColor: Theme.of(context).primaryColor,
               ),
               BottomNavigationBarItem(

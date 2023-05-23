@@ -58,7 +58,7 @@ class _AddTaskPublic extends State<AddTaskPublic> {
     );
 
     if (globals.isFirebase) {
-      var r = await HttpFirebase.updateTaskPublic(globals.task?.doc_id, task, globals.user?.uid);
+      var r = await HttpFirebase.updateTaskPublicByAdmin(globals.task?.doc_id, task, globals.user?.uid);
       r ? _goBack() : print("Echec de la mise a jour ! ");
     } else {
       task = Task(
@@ -67,7 +67,7 @@ class _AddTaskPublic extends State<AddTaskPublic> {
           description: description,
           date_echeance: date_echeance,
           doc_id: globals.task?.doc_id);
-      var r = await HttpTask.updateTaskPublic(task, globals.user?.uid);
+      var r = await HttpTask.updateTaskPublicByAdmin(task, globals.user?.uid);
       r ? _goBack() : print("Echec de la mise a jour ! ");
     }
   }
@@ -85,7 +85,7 @@ class _AddTaskPublic extends State<AddTaskPublic> {
         _goBack();
       }
     } else {
-      var response = await HttpTask.addTaskPublic(task, globals.user?.uid);
+      var response = await HttpTask.addTaskPublicByAdmin(task, globals.user?.uid);
 
       if (response == true) {
         _goBack();

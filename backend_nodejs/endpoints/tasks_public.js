@@ -32,3 +32,38 @@ exports.updateTaskPublic = async (request, response) => {
         .json({ general: "Something went wrong, please try again"});          
     }
 };
+
+
+
+exports.addTaskPublic = async (request, response) => {
+    //console.log(request.body);
+    const querySnapshot = await getDocs(collection(db, "tasks"));
+    try{
+        let number = 0;
+
+        querySnapshot.forEach((doc) => {
+           number += 1;
+          });
+
+
+        const date = new Date(request.body.date_echeance);
+
+        await addDoc(collection(db, "tasks"), {
+            id: number + 1,
+            title: request.body.title,
+            description: request.body.description,
+            date_echeance: date,
+            userID: "0",
+            created_by_user: request.body.userID,
+            modify_by_user: request.body.userID
+          });
+
+
+        
+
+    } catch (error) {
+        return response
+        .status(500)
+        .json({ general: "Echec de j'aout de tache ! "});          
+    }
+};

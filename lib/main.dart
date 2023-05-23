@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:gestion_tache/http/http_messaging.dart';
 import 'firebase_options.dart';
 import 'interfaces/auth/start.dart';
+import 'package:gestion_tache/globals/globals.dart' as globals;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // add this line
@@ -10,17 +11,26 @@ void main() async {
     name: 'flutter-gestion-tache-firebase-here',
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  
-  runApp(const MyApp());
+
+  runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  _MyApp createState() => _MyApp();
+}
+
+class _MyApp extends State<MyApp> {
+  void initState() {
+    super.initState();
+    HttpMessaging().init();
+  }
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    HttpMessaging().init(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
 

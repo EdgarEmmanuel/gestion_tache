@@ -225,7 +225,7 @@ class HttpFirebase {
   }
 
 
-  static Future<bool> updateTaskPublic(id, Task task, userAdmin) async {
+  static Future<bool> updateTaskPublicByAdmin(id, Task task, userAdmin) async {
     CollectionReference tasks = FirebaseFirestore.instance.collection('tasks');
     try {
       await tasks.doc(id).update({
