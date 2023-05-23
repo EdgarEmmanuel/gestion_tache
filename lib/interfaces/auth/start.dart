@@ -6,6 +6,7 @@ import 'package:gestion_tache/globals/globals.dart' as globals;
 import '../Default/accueil.dart';
 import 'auth.dart';
 import 'authEmailPasswordCheck.dart' as authObject;
+import '../dark_mode_switch.dart';
 
 class Start extends StatefulWidget {
   const Start({super.key});
@@ -117,6 +118,10 @@ class _StartState extends State<Start> {
                       ' Allons-y ! '.toUpperCase(),
                       style: const TextStyle(fontSize: 15),
                     )),
+                    const SizedBox(
+                    width: 100,
+                    ),
+                    DarkModeSwitch(),
         ],
       )),
     );

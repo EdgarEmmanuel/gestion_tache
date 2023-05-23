@@ -4,6 +4,7 @@ import 'package:gestion_tache/interfaces/admin/accueil_admin.dart';
 import '../../globals/globals.dart' as globals;
 import 'auth.dart';
 import 'authEmailPasswordCheck.dart' as authObject;
+import '../dark_mode_switch.dart';
 
 class Password extends StatefulWidget {
   const Password({super.key});
@@ -226,6 +227,7 @@ class _PasswordState extends State<Password> {
                     ],
                   ),
                 ),
+                DarkModeSwitch(),
               ],
             ),
           ),

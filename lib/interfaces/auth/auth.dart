@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:gestion_tache/interfaces/auth/password.dart';
 import 'package:gestion_tache/interfaces/auth/register.dart';
 import '../../globals/globals.dart' as globals;
+import '../dark_mode_switch.dart';
+
 
 class Auth extends StatefulWidget {
   const Auth({super.key});
@@ -116,7 +118,7 @@ class _AuthState extends State<Auth> {
                             var errorMessage = globals.errorMessage!;
                             globals.errorMessage = null;
                             return errorMessage;
-                          } else {
+                          } else {   
                             return "";
                           }
                         }(),
@@ -201,6 +203,7 @@ class _AuthState extends State<Auth> {
                     ],
                   ),
                 ),
+                DarkModeSwitch(),
               ],
             ),
           ),

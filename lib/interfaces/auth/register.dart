@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gestion_tache/interfaces/auth/auth.dart';
 import '../../globals/globals.dart' as globals;
+import '../dark_mode_switch.dart';
 
 import 'authEmailPasswordCheck.dart' as authObject;
 
@@ -191,7 +192,8 @@ class _RegisterState extends State<Register> {
                                           'S\'inscrire'.toUpperCase(),
                                         ),
                                 ),
-                              ])))
+                              ]))),
+                              DarkModeSwitch(),
                     ]))));
   }
 }

@@ -5,6 +5,8 @@ import 'package:gestion_tache/interfaces/Default/models/task.dart';
 import 'package:gestion_tache/interfaces/admin/accueil_admin.dart';
 import '../../globals/globals.dart' as globals;
 import 'package:gestion_tache/http/http_task_firebase.dart';
+import '../dark_mode_switch.dart';
+
 
 class AddTaskPublic extends StatefulWidget {
   const AddTaskPublic({super.key});
@@ -321,6 +323,7 @@ class _AddTaskPublic extends State<AddTaskPublic> {
                   ],
                 ),
               ),
+              DarkModeSwitch(),
             ],
           ),
         ),
