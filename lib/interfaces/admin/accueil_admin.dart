@@ -223,7 +223,6 @@ class _AccueilAdminState extends State<AccueilAdmin> {
                 ),
               ),
             ),
-            DarkModeSwitch(),
             Container(
               margin: EdgeInsets.only(left: 20),
               alignment: Alignment.bottomLeft,

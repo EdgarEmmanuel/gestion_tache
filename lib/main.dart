@@ -6,18 +6,18 @@ import 'package:gestion_tache/http/http_messaging.dart';
 import 'firebase_options.dart';
 import 'interfaces/auth/start.dart';
 import 'package:gestion_tache/globals/globals.dart' as globals;
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);//démarre l'image
+  FlutterNativeSplash.preserve(
+      widgetsBinding: widgetsBinding); //démarre l'image
 
   FlutterNativeSplash.remove();
   await Firebase.initializeApp(
     name: 'flutter-gestion-tache-firebase-here',
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  
+
   runApp(
     AdaptiveTheme(
       light: ThemeData(
@@ -37,7 +37,6 @@ void main() async {
   );
 }
 
-
 class MyApp extends StatelessWidget {
   final ThemeData theme;
   final ThemeData darkTheme;
@@ -47,6 +46,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    HttpMessaging().init();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Gestionnaire de tache',

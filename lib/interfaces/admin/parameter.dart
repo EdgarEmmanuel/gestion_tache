@@ -4,6 +4,7 @@ import 'package:gestion_tache/interfaces/admin/accueil_admin.dart';
 import 'package:gestion_tache/interfaces/auth/auth.dart';
 import 'package:gestion_tache/interfaces/auth/rememberMe.dart';
 import 'package:gestion_tache/globals/globals.dart' as globals;
+import 'package:gestion_tache/interfaces/dark_mode_switch.dart';
 
 class Parameter extends StatefulWidget {
   const Parameter({super.key});
@@ -64,7 +65,9 @@ class _Parameter extends State<Parameter> {
             Padding(
               padding: EdgeInsets.all(10.0),
               child: SwitchExample(),
-            )
+            ),
+
+            Expanded(child: DarkModeSwitch(),)
           ],
         ),
       ),
