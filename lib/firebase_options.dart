@@ -44,39 +44,42 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBv-Le6-_IPNiUgv0YulZnBLpZ1fb8uSBQ',
-    appId: '1:472384201308:web:da25b8aa851d8f82433c99',
-    messagingSenderId: '472384201308',
-    projectId: 'task-app-faa69',
-    authDomain: 'task-app-faa69.firebaseapp.com',
-    storageBucket: 'task-app-faa69.appspot.com',
-  );
+      apiKey: "AIzaSyAPKy7F8xZ5ZVuREIJRhAArcOJB3cOQ7Eg",
+      authDomain: "flutter-gestion-tache-firebase.firebaseapp.com",
+      projectId: "flutter-gestion-tache-firebase",
+      storageBucket: "flutter-gestion-tache-firebase.appspot.com",
+      messagingSenderId: "965723048235",
+      appId: "1:965723048235:web:92d628aeeb4f758ef61d6e");
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyARlca8B4Xf9XzlDe68qVAs0R4cjDffz3Y',
-    appId: '1:472384201308:android:3a3924c270de1d1a433c99',
-    messagingSenderId: '472384201308',
-    projectId: 'task-app-faa69',
-    storageBucket: 'task-app-faa69.appspot.com',
-  );
+      apiKey: "AIzaSyAPKy7F8xZ5ZVuREIJRhAArcOJB3cOQ7Eg",
+      authDomain: "flutter-gestion-tache-firebase.firebaseapp.com",
+      projectId: "flutter-gestion-tache-firebase",
+      storageBucket: "flutter-gestion-tache-firebase.appspot.com",
+      messagingSenderId: "965723048235",
+      appId: "1:965723048235:web:92d628aeeb4f758ef61d6e");
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAwnF3ONA0deAfNR3llQONo97hHx-VTwak',
-    appId: '1:472384201308:ios:5b6b3bd47d3253e8433c99',
-    messagingSenderId: '472384201308',
-    projectId: 'task-app-faa69',
-    storageBucket: 'task-app-faa69.appspot.com',
-    iosClientId: '472384201308-2572lg0u5uu4cdulr3r2shv10pnsccee.apps.googleusercontent.com',
+    apiKey: "AIzaSyAPKy7F8xZ5ZVuREIJRhAArcOJB3cOQ7Eg",
+    authDomain: "flutter-gestion-tache-firebase.firebaseapp.com",
+    projectId: "flutter-gestion-tache-firebase",
+    storageBucket: "flutter-gestion-tache-firebase.appspot.com",
+    messagingSenderId: "965723048235",
+    appId: "1:965723048235:web:92d628aeeb4f758ef61d6e",
+    iosClientId:
+        '472384201308-2572lg0u5uu4cdulr3r2shv10pnsccee.apps.googleusercontent.com',
     iosBundleId: 'com.example.gestionTache',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyAwnF3ONA0deAfNR3llQONo97hHx-VTwak',
-    appId: '1:472384201308:ios:3640cc5b685c812c433c99',
-    messagingSenderId: '472384201308',
-    projectId: 'task-app-faa69',
-    storageBucket: 'task-app-faa69.appspot.com',
-    iosClientId: '472384201308-no6hg6g6j1cg8f5qavj735jd78j9pq4d.apps.googleusercontent.com',
+    apiKey: "AIzaSyAPKy7F8xZ5ZVuREIJRhAArcOJB3cOQ7Eg",
+    authDomain: "flutter-gestion-tache-firebase.firebaseapp.com",
+    projectId: "flutter-gestion-tache-firebase",
+    storageBucket: "flutter-gestion-tache-firebase.appspot.com",
+    messagingSenderId: "965723048235",
+    appId: "1:965723048235:web:92d628aeeb4f758ef61d6e",
+    iosClientId:
+        '472384201308-no6hg6g6j1cg8f5qavj735jd78j9pq4d.apps.googleusercontent.com',
     iosBundleId: 'com.example.gestionTache.RunnerTests',
   );
 }

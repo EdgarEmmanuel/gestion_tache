@@ -16,11 +16,11 @@ class AuthCheckAndCreate {
     try {
       final result = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: mail, password: pwd);
-      //print(result.user?.email);
+      //print(result);
       globals.user = result.user;
       Map<String, dynamic> user = {
         'email': result.user?.email,
-        //'password': pwd,
+        'password': pwd,
         'name': result.user?.displayName
       };
       await rememberMe.writeAuthCredential(user);
@@ -57,17 +57,18 @@ class AuthCheckAndCreate {
   }
 
   static Future<bool> isAdmin(userID) async {
-    CollectionReference tasks =
-        FirebaseFirestore.instance.collection('administrators');
+    CollectionReference admins =
+        FirebaseFirestore.instance.collection("users_admin");
     bool isAdmin = false;
 
-    await tasks.get().then((value) => value.docs.forEach((doc) {
-          if (doc['userID'] == userID) {
-            isAdmin = true;
-            return;
-          }
-        }));
-
+    QuerySnapshot querySnapshot = await admins.get();
+    //print(querySnapshot.docs);
+    for (var doc in querySnapshot.docs) {
+      if (doc["userID"] == userID) {
+        isAdmin = true;
+        //return;
+      }
+    }
     return isAdmin;
   }
 

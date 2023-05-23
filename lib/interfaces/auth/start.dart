@@ -25,8 +25,8 @@ class _StartState extends State<Start> {
   void loadAuthCredential() async {
     Map<String, dynamic> credential = await rememberMe.readAuthCredential();
     if (credential.isEmpty == false) {
-      var rep = await AuthCheckAndCreate.userLogIn(
-          credential['email'], credential['password']);
+      var pwd = credential['password'] != null ? credential['password'] : "";
+      var rep = await AuthCheckAndCreate.userLogIn(credential['email'], pwd);
       if (rep == null) {
         setState(() {
           _isLogIn = false;
@@ -46,7 +46,13 @@ class _StartState extends State<Start> {
             MaterialPageRoute(builder: (context) => const Accueil()),
           );
         }
-      } else {}
+      } else {
+        rememberMe.logOut();
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const Auth()),
+        );
+      }
     } else {
       setState(() {
         _isLogIn = false;

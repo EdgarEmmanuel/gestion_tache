@@ -1,33 +1,41 @@
 {
   "project_info": {
-    "project_number": "586727540801",
-    "project_id": "task-app-1ad42",
-    "storage_bucket": "task-app-1ad42.appspot.com"
+    "project_number": "965723048235",
+    "project_id": "flutter-gestion-tache-firebase",
+    "storage_bucket": "flutter-gestion-tache-firebase.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:586727540801:android:f1b6d27a2e11aa9cabdec0",
+        "mobilesdk_app_id": "1:965723048235:android:7f40f3b8867accf5f61d6e",
         "android_client_info": {
-          "package_name": "com.example.gestion_tache"
+          "package_name": "com.gestion.tache.exam"
         }
       },
       "oauth_client": [
         {
-          "client_id": "586727540801-028ioehp9o3bghgqb5iddola8es42bs8.apps.googleusercontent.com",
+          "client_id": "965723048235-bk3v3i13hmiieptsen6el9uj38hihf6k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gestion.tache.exam",
+            "certificate_hash": "84469c3850b4993d492a1a247ae7dd1e05d58010"
+          }
+        },
+        {
+          "client_id": "965723048235-5csa93ngpbqo2b7k7e43e1v59d9293sl.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCzClYlz_WVPjbXc-QcOSOKf7kCO0r6Ak8"
+          "current_key": "AIzaSyCuqnDGwOqR58D9eeL0it6YkS0aa5o6loI"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "586727540801-028ioehp9o3bghgqb5iddola8es42bs8.apps.googleusercontent.com",
+              "client_id": "965723048235-5csa93ngpbqo2b7k7e43e1v59d9293sl.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

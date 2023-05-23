@@ -7,7 +7,7 @@ import 'interfaces/auth/start.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // add this line
   await Firebase.initializeApp(
-    name: 'flutter-gestion-tache-firebase',
+    name: 'flutter-gestion-tache-firebase-here',
     options: DefaultFirebaseOptions.currentPlatform,
   );
   
