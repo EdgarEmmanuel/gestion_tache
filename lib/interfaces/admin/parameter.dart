@@ -96,7 +96,7 @@ class _SwitchExampleState extends State<SwitchExample> {
         SizedBox(height: 30.0),
         Switch(
           // This bool value toggles the switch.
-          value: light,
+          value: globals.isFirebase,
           activeColor: Colors.red,
           onChanged: (bool value) {
             // This is called when the user toggles the switch.
