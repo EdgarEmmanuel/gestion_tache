@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:gestion_tache/http/http_messaging.dart';
 import 'firebase_options.dart';
 import 'interfaces/auth/start.dart';
 import 'package:gestion_tache/globals/globals.dart' as globals;
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized(); // add this line
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized(); // add this line
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);//gerer l'icone au moment de l'init
+  FlutterNativeSplash.remove();
   await Firebase.initializeApp(
     name: 'flutter-gestion-tache-firebase-here',
     options: DefaultFirebaseOptions.currentPlatform,

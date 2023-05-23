@@ -76,7 +76,7 @@ class _StartState extends State<Start> {
                 child: const SizedBox(
                   height: 400,
                   child: Image(
-                    image: AssetImage("resources/start.jpg"),
+                    image: AssetImage("resources/start.jpeg"),
                     fit: BoxFit.cover,
                   ),
                 ),
